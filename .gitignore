@@ -1,0 +1,17 @@
+# Never publish personal journal data — the skill is shareable, the reflections are not.
+# Note the leading slashes: these must NOT match skills/journal/, which is part of the repo.
+/journal/
+**/journal/reflections/
+**/journal/distilled/
+**/distilled/preferences.md
+
+# Local agent state
+.claude/settings.local.json
+.claude/plans/
+
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
