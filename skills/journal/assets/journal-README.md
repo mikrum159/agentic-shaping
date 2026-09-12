@@ -4,12 +4,12 @@ Cross-project notes on how I work with my coding agent. Distinct from auto-memor
 
 ## Folders
 
-- `reflections/` — one file per notable session (`YYYY-MM-DD-slug.md`). Append-only. Skip routine sessions; only write when there was a notable preference, redirection, or friction point.
+- `reflections/` — one file per notable session (`YYYY-MM-DD-slug.md`). Append-only. Only written when the session diverged — an argument, a weighed choice, a plan that turned out wrong.
 - `distilled/` — synthesised summaries built from reflections. Short, prompt-ready, safe to paste into a new session or load via a hook.
 
 ## Trigger
 
-Say "wrap up", or invoke the `journal` skill directly. The agent drafts a reflection following the template below and shows it in chat; I edit before it's saved.
+Say "wrap up", or invoke the `journal` skill directly. The agent also offers when a session ends and something diverged — the plan bent, two options were argued, a decision got reversed. It drafts a reflection following the template below and shows it in chat; I edit before it's saved.
 
 ## Reflection template
 
@@ -41,7 +41,7 @@ One line: what we were doing.
 
 ## Rule for entries
 
-Capture **what surprised either of us**, not a blow-by-blow recap. If nothing surprised anyone, don't write.
+Capture **where we disagreed or were surprised**, not a blow-by-blow recap. A session that ran straight down an agreed plan doesn't need an entry, however much got built.
 
 ## Privacy
 

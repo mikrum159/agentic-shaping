@@ -1,15 +1,33 @@
 # Sizing each kind of unit
 
-Read this when proposing a Selected unit and you're unsure whether the boundary is right.
+Read this when proposing a Selected unit and the boundary feels off.
 
-A **Build Slice** should feel like one reviewable change: one concern, one validation criterion, one rollback unit. Roughly PR-sized. The right test is whether you can state the boundary in one sentence and a reviewer can judge it against a single goal — not the file count. A scaffold Build Slice that creates 20 files is fine; a 3-file change that mixes auth and routing is not.
+## Checkpoint before you split
 
-A **Decision Slice** should resolve one named question. Its "validation" is consistency: every claim it makes can be defended against the prior Current Shape and against any new evidence cited.
+The default is **one larger unit with Checkpoints**, not two small ones. A unit that is correctly sized but *long* doesn't need cutting — it needs a pause partway through.
 
-A **Re-cut** should explain what changed in the slice list and why, with a clear before/after snapshot of the affected entries. It is itself a unit, not a side effect of another unit.
+Split only when the validations are genuinely unrelated. Checkpoint when there is one validation and the developer would simply like a look before it lands.
 
-A **Pass** should be small enough that it doesn't belong as its own row in the slice list, but big enough to deserve a Capture entry instead of being folded into the next Slice's notes. Polish passes, chrome passes, planning passes, narrow correction passes all qualify.
+Fusing correction opportunity to unit size is what drives slices to shrink: if the only way to get another look is to cut another Slice, slices get cut smaller and smaller until every one carries a full agree → build → show → capture ceremony, and the loop reads as overhead.
 
-If a unit needs multiple unrelated validations, or its boundary is hard to state in one sentence, it is probably two units.
+## Build Slice
 
-**Before splitting, check whether you actually want a Checkpoint.** A Slice that is correctly sized but *long* doesn't need cutting — it needs a pause partway through. Split when the validations are genuinely unrelated; checkpoint when there's one validation and the developer would simply like a look before it lands.
+One reviewable change: one concern, one validation criterion, one rollback unit. Roughly PR-sized.
+
+The test is whether you can state the boundary in one sentence and a reviewer can judge it against a single goal — not file count. A scaffold Build Slice that creates 20 files is fine; a 3-file change mixing auth and routing is not.
+
+**Floor:** if the unit's capture would be a single line, it is too small to be a Slice. Make it a Pass, or merge it into the neighbouring unit.
+
+**Ceiling:** if it needs multiple unrelated validations, or its boundary is hard to state in one sentence, it is probably two units — after you've ruled out a Checkpoint.
+
+## Decision Slice
+
+Resolves one named question. Its validation is consistency: every claim it makes can be defended against the prior Current Shape and against any new evidence cited.
+
+## Re-cut
+
+Explains what changed in the slice list and why, with a clear before/after of the affected entries. It is its own unit, never a side effect of another one.
+
+## Pass
+
+Small enough that it doesn't deserve a row in the slice list, big enough to deserve its own capture rather than being folded into the next unit's notes. Polish, chrome, planning, and narrow corrections all qualify.

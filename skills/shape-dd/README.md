@@ -18,12 +18,13 @@ Copy this folder into the skill location used by your agent.
 Common repo-local locations:
 
 ```text
-.agents/skills/shape-dd/        # Codex-compatible
 .claude/skills/shape-dd/        # Claude Code, repo-local
 ~/.claude/skills/shape-dd/      # Claude Code, user-level
 ```
 
-The folder can also be installed as a user-level skill if your agent supports global skills.
+The folder is self-contained, so it also drops into whatever directory another agent reads skills from. The mechanics are tool-agnostic; only the archive path assumes a `~/.claude/` home.
+
+The whole repo also installs as a plugin — see the [root README](../../README.md).
 
 ## Files
 
@@ -32,19 +33,24 @@ shape-dd/
   SKILL.md
   README.md
   assets/
-    shape-template.md            # the Current Shape scaffold
+    shape-template.md            # current state — what a cold session reads
+    log-template.md              # append-only history, split out of the shape
     slice-template.md            # separate Slice records, for larger work
     skill-feedback-template.md   # process friction captured during real use
   examples/
-    single-file-shape.md         # small task, one file
-    feature-folder-shape.md      # larger task, shape + slices
+    single-file-shape.md         # small task, state + log in one file
+    feature-folder-shape.md      # larger task, shape.md + log.md
     opening-response.md          # density target for the first reply
   references/
     sizing.md                    # read when a unit boundary feels off
     capture-formats.md           # read at the end of a Shape Pass
+    delegation.md                # read before briefing a sub-agent
+    archiving.md                 # read when closing a shape out before a PR
 ```
 
-`SKILL.md` is loaded whenever the skill triggers; `references/` files are read on demand, so detail lives there rather than inflating the entry file.
+`SKILL.md` is loaded whenever the skill triggers and stays in context across turns, so every line is a recurring cost. `references/` files are read on demand — detail lives there rather than inflating the entry file.
+
+The shape splits **state** from **history**: `shape.md` holds what is true now and stays small; `log.md` accumulates captures and is never rewritten. A small task keeps both in one file.
 
 ## Suggested repo shape locations
 
@@ -59,6 +65,7 @@ Larger task:
 ```text
 docs/shapes/{feature-or-task}-shape/
   shape.md
+  log.md
   slices/
     001-{slice-name}.md
 ```

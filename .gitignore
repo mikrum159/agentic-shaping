@@ -9,6 +9,10 @@
 .claude/settings.local.json
 .claude/plans/
 
+# Personal cross-project workflow, not repo content.
+# NEXT.md is hand-written input to a PORTFOLIO.md generated one level up.
+NEXT.md
+
 # OS / editor
 .DS_Store
 Thumbs.db

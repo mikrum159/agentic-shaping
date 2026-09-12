@@ -2,43 +2,61 @@
 
 Status: Active
 
+Example of the **folder** form, at the start of the work. This file is `shape.md` — state only. History goes to `log.md` beside it.
+
+```text
+docs/shapes/account-merge-shape/
+  shape.md    # this file — current state
+  log.md      # append-only history, from assets/log-template.md
+  slices/     # optional, for units that need their own record
+```
+
+## Resume next session
+
+**First action:** agree the boundary for the data inventory unit and start it.
+
+**State on disk:** nothing yet — shape just created.
+
+**Canonical validation commands:** none yet; the first unit is investigation.
+
 ## Intent
 
-Allow support staff to merge duplicate customer accounts safely while preserving auditability and avoiding accidental data loss.
+Allow support staff to merge duplicate customer accounts safely, preserving auditability and avoiding accidental data loss.
+
+## Working Agreement
+
+Nothing differs from the skill's Local calibration.
 
 ## Source Material
 
-- Existing support workflow notes described duplicate account pain, but did not define merge rules.
+- Existing support workflow notes describe the duplicate-account pain but do not define merge rules.
 
 ## Current Shape
 
 ### Current understanding
 
-- Account data is spread across profile, billing, notes, and login identity areas.
+- Account data spans profile, billing, notes, and login identity.
 - The risky part is not the button; it is defining a safe merge boundary.
-- Work should proceed in narrow Slices with validation after each pass.
 
 ### Decisions
 
 - Start with a read-only merge preview before any write operation.
-- Treat destructive or irreversible changes as out of scope until preview behavior is reviewed.
-- Capture unresolved domain rules rather than guessing.
+- Capture unresolved domain rules rather than guessing them.
 
 ### Constraints
 
-- Must preserve audit history.
-- Must not merge authentication identities in the first implementation pass.
-- Must not change billing ownership without explicit product/domain review.
+- Must preserve audit history. *(from `docs/support/audit-policy.md` — verified against the code, audit rows are append-only)*
+- Must not merge authentication identities in the first implementation pass. *(developer)*
+- Must not change billing ownership without explicit product/domain review. *(from the support workflow notes — **unverified**, notes are 2 years old; confirm before it blocks a unit)*
 
 ### Assumptions
 
 - Support staff need visibility into conflicts before any merge action is offered.
-- Existing account modules can be inspected before deciding the final write model.
 
 ### Risks
 
-- Merge rules may differ by data area and cannot be safely inferred from table names alone.
-- A write operation before preview review could create irreversible data loss.
+- Merge rules may differ by data area and cannot be inferred from table names alone.
+- A write operation before preview review could cause irreversible data loss.
 
 ### Open questions
 
@@ -46,78 +64,41 @@ Allow support staff to merge duplicate customer accounts safely while preserving
 - Who is allowed to perform merges?
 - What undo or rollback expectation exists?
 
-### Completed Slices
+### Pending validation
 
 - None.
 
 ## Candidate Slices
 
-1. Inventory account-related data and identify merge-safe vs blocked areas.
-2. Build read-only merge preview model.
-3. Add tests for preview conflict detection.
-4. Add minimal support-staff UI for preview only.
+Rough direction, not a plan of record. The conflict-rule questions above may force a Decision Slice before slice 2.
 
-## Selected Slice
+1. Inventory account-related data; classify merge-safe vs blocked areas.
+2. Read-only merge preview model.
+3. Tests for preview conflict detection.
+4. Minimal support-staff UI, preview only.
 
-Slice: Inventory account-related data and identify merge-safe vs blocked areas.
+## Current unit
 
-Goal: Produce a compact map of account-related data and classify what can be previewed, merged later, or blocked.
+Unit: Account data inventory — Build Slice
+
+Goal: Produce a compact map of account-related data, classifying what can be previewed, merged later, or blocked.
 
 Boundary: Investigation and documentation only. No production code changes.
 
 Expected files/areas touched:
 
-- Shape file only, unless existing docs need links.
+- This shape file, plus links to existing docs if any are found.
 
 Validation:
 
-- Account-related modules/tables/files are identified.
-- Unknowns are captured as open questions.
-- Next Slice can build a preview model without guessing.
+- Account-related modules and tables are identified.
+- Unknowns are captured as open questions rather than guessed.
+- The preview model unit can start without guessing.
 
-## Review Notes
+### Review notes
 
 Actual change:
 
-- Pending.
-
 Validation result:
 
-- Pending.
-
 Issues or surprises:
-
-- Pending.
-
-## Capture
-
-Update after the Shape Pass.
-
-### Shape changes
-
-- Pending.
-
-### New decisions
-
-- Pending.
-
-### New or changed assumptions
-
-- Pending.
-
-### New constraints or risks
-
-- Pending.
-
-### Remaining open questions
-
-- Pending.
-
-### Likely next Slices
-
-1. Build read-only merge preview model.
-2. Add tests for preview conflict detection.
-
-### Skill Feedback
-
-- None yet.

@@ -1,0 +1,27 @@
+{
+  "name": "mikrum159-skills",
+  "owner": {
+    "name": "Michal Kruml",
+    "url": "https://github.com/mikrum159"
+  },
+  "description": "Agent skills for AI-assisted software work: premise-first planning, slice-at-a-time building, and session reflection that promotes what it learns.",
+  "plugins": [
+    {
+      "name": "agentic-shaping",
+      "source": "./",
+      "description": "Three skills for AI-assisted software work: premise-first planning (plan-kickoff), slice-at-a-time building (shape-dd), and divergence-triggered session reflection (journal).",
+      "author": {
+        "name": "Michal Kruml"
+      },
+      "homepage": "https://github.com/mikrum159/agentic-shaping",
+      "repository": "https://github.com/mikrum159/agentic-shaping",
+      "license": "MIT",
+      "keywords": [
+        "planning",
+        "workflow",
+        "shape-driven-development",
+        "reflection"
+      ]
+    }
+  ]
+}

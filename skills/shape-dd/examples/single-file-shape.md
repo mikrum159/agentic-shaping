@@ -2,121 +2,104 @@
 
 Status: Active
 
+Example of the **single-file** form: state first, log sections appended at the bottom. One unit is done, the next is agreed.
+
+## Resume next session
+
+**First action:** agree the boundary for the UI export button, then build it.
+
+**State on disk:** export endpoint committed on `feature/invoice-export`. Nothing uncommitted.
+
+**Canonical validation commands:** `npm test -- invoices`, and `curl localhost:3000/api/invoices/export?status=paid` for a manual check.
+
 ## Intent
 
 Add a simple CSV export for the invoice list so users can download the currently filtered results for offline reporting.
 
+## Working Agreement
+
+Nothing differs from the skill's Local calibration.
+
 ## Source Material
 
-- None. This shape started from rough intent.
+- None. Started from rough intent.
 
 ## Current Shape
 
 ### Current understanding
 
 - The invoice list already supports filtering by date, status, and customer.
-- Export should reuse the same filter state as the visible list.
-- The first pass should focus on backend/API behavior, not UI polish.
+- Export reuses the same filter state as the visible list.
+- Backend landed first; UI is next.
 
 ### Decisions
 
-- CSV export will be a dedicated endpoint rather than overloading the list endpoint.
-- The first Slice will include a small integration test for filter reuse.
+- CSV export is a dedicated endpoint rather than an overload of the list endpoint.
+- CSV columns match fields already visible in the invoice list.
 
 ### Constraints
 
-- Do not redesign invoice filtering.
-- Do not introduce a reporting framework.
-- Keep CSV columns limited to fields already visible in the list.
+- Do not redesign invoice filtering. *(developer)*
+- Do not introduce a reporting framework. *(developer)*
 
 ### Assumptions
 
-- Existing invoice query/filter logic can be reused for export.
-- CSV columns should initially match fields already visible in the invoice list.
+- The existing invoice query/filter logic is reusable for export.
 
 ### Risks
 
-- Export behavior could drift from list behavior if it uses separate filtering logic.
-- UI work could expand the first Slice beyond the backend validation boundary.
+- Export behavior could drift from list behavior if the two ever stop sharing filter logic.
 
 ### Open questions
 
-- Exact filename convention can be decided later.
+- Filename convention — deferred to the polish unit.
 
-### Completed Slices
+### Pending validation
 
 - None.
 
 ## Candidate Slices
 
-1. Add backend export endpoint using existing filters.
-2. Add UI export button wired to current filter state.
-3. Add filename/date formatting and edge-case polish.
+Rough direction, not a plan of record.
 
-## Selected Slice
+1. ~~Backend export endpoint reusing existing filters.~~ Done.
+2. UI export button wired to current filter state.
+3. Filename/date formatting and edge cases.
 
-Slice: Add backend export endpoint using existing filters.
+## Current unit
 
-Goal: Provide a CSV response for invoices matching the same filter inputs as the list endpoint.
+Unit: UI export button — Build Slice
 
-Boundary: API route, export handler/service, and tests only. No UI work.
+Goal: Let the user trigger the export from the invoice list, using whatever filters are currently applied.
+
+Boundary: Invoice list component and its tests only. No changes to the endpoint, no filename work.
 
 Expected files/areas touched:
 
-- Invoice API/controller
-- Invoice query/filter service
-- CSV serialization helper if needed
-- API/integration tests
+- Invoice list component
+- Component tests
 
 Validation:
 
+- Clicking export with active filters requests the endpoint with those same filter params.
 - Existing invoice list tests still pass.
-- New test proves status/date/customer filters affect export output.
-- CSV response includes expected headers and visible-list fields.
 
-## Review Notes
+### Review notes
 
 Actual change:
 
-- Pending.
-
 Validation result:
-
-- Pending.
 
 Issues or surprises:
 
-- Pending.
+---
 
-## Capture
+# Log
 
-Update after the Shape Pass.
+## Completed units
 
-### Shape changes
+- 2026-03-04 — [Build Slice] Backend export endpoint: added `GET /api/invoices/export` reusing `InvoiceFilterService`, plus a CSV serialization helper. Integration test proves status/date/customer filters change export output; existing list tests pass. Decision: dedicated endpoint, not a list-endpoint overload — keeps the list response contract untouched.
 
-- Pending.
-
-### New decisions
-
-- Pending.
-
-### New or changed assumptions
-
-- Pending.
-
-### New constraints or risks
-
-- Pending.
-
-### Remaining open questions
-
-- Filename convention.
-
-### Likely next Slices
-
-1. Add UI export button.
-2. Add filename/date formatting.
-
-### Skill Feedback
+## Skill Feedback
 
 - None yet.
