@@ -12,6 +12,8 @@ plan-kickoff  →  shape-dd  →  journal
              promoted back as rules
 ```
 
+> **Status: v1, September 2026.** These grew out of real use, but this release is a substantial restructure — `shape-dd` is roughly half its previous size and the loop has fewer stop-and-ask gates. The wording is therefore newer than the experience behind it. Expect the calibration values to need changing for you; that's what they're for.
+
 ## What it looks like
 
 You start with rough intent. The agent doesn't start coding, and it doesn't interview you either:
