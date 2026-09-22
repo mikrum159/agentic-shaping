@@ -26,10 +26,8 @@ So "anti-drift" does not mean stick to the plan. It means changing course is a d
 - **Pass** — smaller than a Slice: polish, cleanup, narrow correction, planning. No row in the slice list; still gets its own capture.
 - **Checkpoint** — a pause *inside* a unit. Three or four lines, no agreement ritual, no capture, no new unit. **Silence is proceed.**
 - **Review round** — the developer's feedback on a unit that has been shown but not yet accepted. It belongs to that unit: fix it, show it again, and note it in the unit's log entry. It needs no new agreement and does not become a new Pass.
-- **Acceptance** — the developer's message closing the review. It is typically sent after staging, before committing ("validated, staged — anything to record?"). It confirms the validation the developer owns and closes the unit in the same reply.
+- **Acceptance** — the developer's message closing the review, typically sent after staging (see *Local calibration*). It confirms the validation the developer owns and closes the unit in the same reply.
 - **Shape Pass** — one iteration of the loop. Ends with a capture.
-
-Naming all four unit kinds is what stops every step being forced into a "write code" frame, and stops the slice list changing silently.
 
 ## The loop
 
@@ -67,9 +65,7 @@ Otherwise state the assumption briefly and proceed.
 - If the unit proves too large, narrow it inline and split the remainder off as a later candidate. That is the only slice-list edit allowed inside an in-flight unit; anything broader is a Re-cut.
 - **Checkpoint** at natural seams: what landed, what's next inside this boundary, anything found that might change the plan. Then continue unless redirected.
 
-Checkpoint when a layer or file group completes, when a finding arrives that doesn't warrant a Re-cut, or when the unit is running long enough that one end-of-unit capture would lose the early detail. On a multi-session unit, append each checkpoint to the log as you go.
-
-Correction opportunity and unit size are different knobs. Fusing them is what drives slices to shrink until every one carries a full agree → build → show → capture ceremony. Keep units the size `references/sizing.md` describes and pause *within* one instead of cutting another.
+Checkpoint when a layer or file group completes, when a finding arrives that doesn't warrant a Re-cut, or when the unit is running long enough that one end-of-unit capture would lose the early detail. On a multi-session unit, append each checkpoint to the log as you go. Pause *within* a unit rather than cutting another one: see `references/sizing.md`.
 
 ### 3. After the unit — review, show, don't commit
 
@@ -97,9 +93,7 @@ If the unit contained an argued-out divergence (a recommendation the developer o
 
 ## Sizing
 
-If you can state a unit's boundary in one sentence and validate it against a single goal, the size is probably right. Multiple unrelated validations, or a boundary that's hard to state, usually means two units — but check first whether you actually want a Checkpoint.
-
-Read `references/sizing.md` when a boundary feels off.
+A unit is the right size if its boundary fits one sentence and it validates against a single goal. Read `references/sizing.md` when a boundary feels off.
 
 ## Starting a new shape
 
@@ -112,15 +106,18 @@ Read `references/sizing.md` when a boundary feels off.
 
 Keep the opening short: one or two Intent sentences, a few Shape bullets, 2-4 Candidate Slices, one recommended unit, a pause. `examples/opening-response.md` is the density target. Don't ask for more detail unless a missing decision blocks the next unit.
 
-**From an existing plan, spec, issue or design note:** treat it as source material, not a work order. Do not execute it directly. Distill it into the shape first — intent, constraints, known decisions, assumptions, risks, open questions, candidate slices, recommended next unit (often a Decision Slice, if the plan has unresolved choices). A detailed plan can inform the shape; it does not replace it.
+**From an existing plan, spec, issue or design note:** treat it as source material, not a work order. Distill it into the shape before executing anything. When the plan has unresolved choices, the recommended next unit is often a Decision Slice.
 
-Record where each constraint and decision came from. Anything inherited from a document — including a plan that itself leaned on a note somewhere in the repo — is a claim with a source, not a verified fact, and a stale one reads exactly like a real limit. A long plan can't be audited up front, so provenance is what makes the check possible later, at the moment one actually blocks a unit.
+Record where each constraint and decision came from. One inherited from a document is a claim, not a verified fact, and the recorded source is what lets it be checked when it blocks a unit.
 
 ## Resuming existing work
 
 1. Read the Current Shape first, then the log's most recent entries.
 2. Honor the shape's Working Agreement.
-3. Reconcile state before proposing anything. Read commit status from `git status` / `git log`; never take it from the shape. You may close validation you own yourself, such as tests or a gate you can re-run. **Never close a developer-owned check by inference.** A commit is not proof that a manual check ran. For each such check still open, ask one line ("Slice 17's restart check — did it pass?") and keep it in Pending validation until the developer answers. If they skip the question, mark it `unconfirmed`. Don't record it as closed.
+3. Reconcile state before proposing anything:
+   - Read commit status from git, never from the shape.
+   - Close validation you own yourself, such as a gate you can re-run.
+   - **Never close a developer-owned check by inference.** A commit is not proof that the check ran. Ask one line ("Slice 17's restart check — did it pass?") and keep the check in Pending validation until the developer answers. If they skip the question, mark it `unconfirmed`.
 4. Summarize the current state briefly.
 5. Propose the next unit, or continue the selected one.
 6. Preserve captured decisions and constraints unless new evidence changes them. Ignore stale chat context that conflicts with the Current Shape.
@@ -136,7 +133,10 @@ Use the single file until the work clearly needs more.
 
 **Templates:** `assets/shape-template.md` (state), `assets/log-template.md` (history), `assets/slice-template.md` (separate slice records), `assets/skill-feedback-template.md` (process friction).
 
-**Closing:** a shape doesn't have to deliver every Candidate Slice to be worth closing. Close at a coherent stopping point — when what shipped forms a self-contained chapter — flip Status to `Closed` with a short closure summary (what shipped, what was deferred, where it went), and move remaining items to a successor shape that links back. Before flipping it, run one **close audit**: a single review across everything the shape touched, rather than unit by unit. Re-check the guarantees earlier units claimed against the code, and re-check anything left `unconfirmed`. Per-unit checks do not add up to a verified whole. Record the result in the closure summary's `Audit:` field. Prune Decisions at close: mark superseded entries `[superseded by …]` or move them to an archive section. Inside an active shape, strike through rather than delete — the original wording is often useful evidence for the successor.
+**Closing:** close when what shipped forms a self-contained chapter, even with Candidate Slices left; remaining items move to a successor shape that links back.
+- **Audit first.** Run one review across everything the shape touched, rather than unit by unit. Re-check the guarantees earlier units claimed against the code, and anything left `unconfirmed`. Per-unit checks do not add up to a verified whole.
+- **Fill the closure summary** in the log template, including `Audit:`, then flip Status to `Closed`.
+- **Prune Decisions:** mark superseded entries `[superseded by …]`. Inside an active shape, strike through rather than delete.
 
 Split instead of closing when two themes inside one shape stop sharing context. Fork instead of splitting when an idea is only loosely related — new shape, cross-linked.
 
