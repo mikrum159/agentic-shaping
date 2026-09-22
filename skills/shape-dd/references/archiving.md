@@ -1,6 +1,6 @@
 # Archiving a closed shape
 
-Shape files usually live in the working tree without being committed, so they die with the branch. The log, the Re-cuts and the Skill Feedback are the record of how the work actually went — archive them before the branch goes away.
+Shape files are often left uncommitted, and then they die with the branch. Some repos commit them, and even publish them. Either way, the log, the Re-cuts and the Skill Feedback are the record of how the work actually went. The archive gathers them in one place, across repos, for the skill-improvement pass.
 
 Run this when the developer asks: *"archive this shape"*, *"close this out before the PR"*, or similar. Never automatically.
 
@@ -28,7 +28,7 @@ If any of these are missing, do them as part of the close, then archive.
 
 **1. Copy the shape verbatim.** `shape.md`, `log.md`, and any `slices/`. For a single-file shape, copy that one file.
 
-Copy, don't move. Shape files aren't committed, so moving means deleting the developer's working files during a mechanical step. Leave the originals; say at the end that they can be deleted or left to die with the branch.
+Copy, don't move. Moving means deleting the developer's working files, or tracked files, during a mechanical step. Leave the originals. At the end, say what can happen to them: uncommitted ones can be deleted or left to die with the branch; committed ones stay where the repo keeps them.
 
 Do not prune, merge or summarize while copying. Pruning belongs in the live shape at close — the archive exists so future analysis can read the raw record, and curating at archive time silently decides what future sessions get to see.
 
@@ -80,7 +80,7 @@ Use the shape's first log entry date and its close date as the range. If the dir
 
 The Skill Feedback list is duplicated into the index on purpose: it's the reason the skill-improvement pass opens an archive at all, and it shouldn't require reading the whole log to find.
 
-**4. Report the archive path** and say the working-tree originals are safe to delete.
+**4. Report the archive path**, and say whether the originals are safe to delete.
 
 ## Why the index matters
 

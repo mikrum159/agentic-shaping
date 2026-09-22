@@ -17,6 +17,14 @@ Later events **append a line to the same entry**. They are never new units:
 
 `Pending validation` in the shape file indexes the entries whose status isn't `validated`. The log holds the record; Pending validation holds the list of what is still open.
 
+## Writing a manual check
+
+A manual check is only as good as its wording. On MarkScope, the check that mattered (a real restart) was the one never run, and another asked for something that could not happen. The checks that worked made the developer use the app in a way ordinary use doesn't. Write each one to:
+
+- **Give steps and an observation.** Name what to do and what to look for, not just a feature to confirm.
+- **Include the path ordinary use skips.** A restart, an error, large input, or repeating an action quickly.
+- **Be reachable.** Before asking, confirm the observation can actually happen in the current build.
+
 ## Log format
 
 One fixed format, so the log can be counted and scanned:

@@ -42,4 +42,6 @@ Filled in when Status flips to `Closed`, and read by `references/archiving.md` w
 
 **Successor shape:**
 
+**Audit:** the result of the whole-shape review before close: what was re-checked and what it found.
+
 **Related reflections:** any `~/.claude/journal/reflections/` entries from this shape's run — where the plan was argued, reversed, or found wrong. Leave empty if none.

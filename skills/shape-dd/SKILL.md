@@ -136,11 +136,11 @@ Use the single file until the work clearly needs more.
 
 **Templates:** `assets/shape-template.md` (state), `assets/log-template.md` (history), `assets/slice-template.md` (separate slice records), `assets/skill-feedback-template.md` (process friction).
 
-**Closing:** a shape doesn't have to deliver every Candidate Slice to be worth closing. Close at a coherent stopping point — when what shipped forms a self-contained chapter — flip Status to `Closed` with a short closure summary (what shipped, what was deferred, where it went), and move remaining items to a successor shape that links back. Prune Decisions at close: mark superseded entries `[superseded by …]` or move them to an archive section. Inside an active shape, strike through rather than delete — the original wording is often useful evidence for the successor.
+**Closing:** a shape doesn't have to deliver every Candidate Slice to be worth closing. Close at a coherent stopping point — when what shipped forms a self-contained chapter — flip Status to `Closed` with a short closure summary (what shipped, what was deferred, where it went), and move remaining items to a successor shape that links back. Before flipping it, run one **close audit**: a single review across everything the shape touched, rather than unit by unit. Re-check the guarantees earlier units claimed against the code, and re-check anything left `unconfirmed`. Per-unit checks do not add up to a verified whole. Record the result in the closure summary's `Audit:` field. Prune Decisions at close: mark superseded entries `[superseded by …]` or move them to an archive section. Inside an active shape, strike through rather than delete — the original wording is often useful evidence for the successor.
 
 Split instead of closing when two themes inside one shape stop sharing context. Fork instead of splitting when an idea is only loosely related — new shape, cross-linked.
 
-**Archiving:** shape files usually aren't committed, so a closed shape dies with its branch — taking the log and the Skill Feedback with it. When the developer asks to archive (typically before opening the PR), follow `references/archiving.md`.
+**Archiving:** an uncommitted shape dies with its branch, taking the log and the Skill Feedback with it. A committed one still belongs in the archive, which gathers the record across repos. When the developer asks to archive (typically before opening the PR), follow `references/archiving.md`.
 
 ## Delegating to sub-agents
 
@@ -156,7 +156,7 @@ Defaults tuned to one developer. Edit freely — lessons about how *this* develo
 - **Acceptance** is any message that says the work is validated or staged and asks about committing or recording. Examples: "validated, staged. anything to record?", "staged, all ok. I'll commit - anything to record before I do?", "validated, staged. can I commit?". Any such message closes the unit in that reply. A message that asks for a change is a review round.
 - **Compact the shape above ~15KB.** The capture checklist enforces this.
 - **Prefer one larger unit with Checkpoints over two small ones.** If a unit's capture would be a single line, it is a Pass, or it belongs merged with its neighbour.
-- **Expect roughly one unit per session.** Keep `Resume next session` accurate enough that a cold session can act from it without reading the whole shape.
+- **Several units per session is normal.** Each one is still agreed separately. Keep `Resume next session` accurate enough that a cold session can act from it without reading the whole shape.
 - **Delegate mechanical work to a cheaper model tier**; keep orchestration, captures and Decision Slices in-context.
 - **Archive closed shapes** to `~/.claude/shape-archive/{repo}/{date}-{feature}/`.
 - **Don't solicit process moves.** Propose a Re-cut, a model re-check, or an extra validation round only when a trigger in the loop actually fired — not as a standing offer.

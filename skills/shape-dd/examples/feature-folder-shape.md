@@ -2,6 +2,8 @@
 
 Status: Active
 
+Workflow: shape-dd. Load the skill before acting on this file.
+
 Example of the **folder** form, at the start of the work. This file is `shape.md` — state only. History goes to `log.md` beside it.
 
 ```text

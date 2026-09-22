@@ -2,6 +2,8 @@
 
 Status: Active
 
+Workflow: shape-dd. Load the skill before acting on this file.
+
 Example of the **single-file** form: state first, log sections appended at the bottom. One unit is done, the next is agreed.
 
 ## Resume next session
