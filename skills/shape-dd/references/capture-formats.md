@@ -35,7 +35,7 @@ One fixed format, so the log can be counted and scanned:
 
 ## End-of-pass checklist
 
-Run all six **on acceptance**. When the unit is first shown, run only step 1 and add the unit to `Pending validation`. Steps 3 and 4 are the ones most often skipped, and skipping them is what leaves a finished unit reading as still open in the next session.
+Run all six **on acceptance**. When the unit is first shown, run only step 1, and add the unit to `Pending validation` if a check is still open. Steps 3 and 4 are the ones most often skipped, and skipping them is what leaves a finished unit reading as still open in the next session.
 
 1. **Write or complete the entry** in the log, using the format for the unit's kind below, with its status line.
 2. **Update `Pending validation`.** Remove the unit once its status is `validated`. If a check is still open, leave the unit there and say what is blocking.
