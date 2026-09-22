@@ -30,6 +30,15 @@ Four parts:
 
 Cover ambiguous edge cases explicitly. A sub-agent has no chat context and will interpret narrowly.
 
+## Handing the next session to a cheaper model
+
+Sometimes a whole session goes to a cheaper model rather than one unit to a sub-agent. Then the shape itself is the brief. Before handing over, run a Pass that audits `Resume next session` and the next Candidate Slice for:
+
+- **Undecided forks.** Two reasonable ways to wire something, with no choice recorded.
+- **Rules with no mechanism.** "Pin versions" with nothing saying how.
+- **Loose scope.** A boundary that invites over-building.
+- **Standing rules the model may never see.** A session that doesn't load the skill never reads Local calibration. Copy the ones that matter, such as never committing, into the Working Agreement.
+
 ## Trust but verify
 
 Read the diff and re-run validation yourself before accepting the result. A delegated unit still goes through the normal review and capture steps — delegation changes who types, not who is accountable.

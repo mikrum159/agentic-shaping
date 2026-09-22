@@ -43,7 +43,7 @@ shape-dd/
     opening-response.md          # density target for the first reply
   references/
     sizing.md                    # read when a unit boundary feels off
-    capture-formats.md           # read at the end of a Shape Pass
+    capture-formats.md           # read when a unit is shown, and on acceptance
     delegation.md                # read before briefing a sub-agent
     archiving.md                 # read when closing a shape out before a PR
 ```

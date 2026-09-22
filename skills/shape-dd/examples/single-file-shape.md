@@ -2,13 +2,15 @@
 
 Status: Active
 
+Workflow: shape-dd. Load the skill before acting on this file.
+
 Example of the **single-file** form: state first, log sections appended at the bottom. One unit is done, the next is agreed.
 
 ## Resume next session
 
 **First action:** agree the boundary for the UI export button, then build it.
 
-**State on disk:** export endpoint committed on `feature/invoice-export`. Nothing uncommitted.
+**State on disk:** working on `feature/invoice-export`, local only and not yet pushed.
 
 **Canonical validation commands:** `npm test -- invoices`, and `curl localhost:3000/api/invoices/export?status=paid` for a manual check.
 
@@ -96,9 +98,9 @@ Issues or surprises:
 
 # Log
 
-## Completed units
+## Units
 
-- 2026-03-04 — [Build Slice] Backend export endpoint: added `GET /api/invoices/export` reusing `InvoiceFilterService`, plus a CSV serialization helper. Integration test proves status/date/customer filters change export output; existing list tests pass. Decision: dedicated endpoint, not a list-endpoint overload — keeps the list response contract untouched.
+- 2026-03-04 — [Build Slice] 1. Backend export endpoint: added `GET /api/invoices/export` reusing `InvoiceFilterService`, plus a CSV serialization helper. Integration test proves status/date/customer filters change export output; existing list tests pass. Decision: dedicated endpoint, not a list-endpoint overload — keeps the list response contract untouched. Status: validated
 
 ## Skill Feedback
 
