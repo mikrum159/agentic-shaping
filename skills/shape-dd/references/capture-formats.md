@@ -17,17 +17,33 @@ Later events **append a line to the same entry**. They are never new units:
 
 `Pending validation` in the shape file indexes the entries whose status isn't `validated`. The log holds the record; Pending validation holds the list of what is still open.
 
+## Log format
+
+One fixed format, so the log can be counted and scanned:
+
+- **Order:** oldest first. Always append at the end; never insert an entry mid-log, even a late one.
+- **Tag:** `[Build Slice] 17. Name` or `[Decision Slice] 3. Name`, using the Candidate Slice number. Passes and Re-cuts have no row in the slice list, so they take no number: `[Pass] Name`, `[Re-cut] Name`.
+- **Validation line:** record the result against the canonical commands (e.g. "gate 120/120"), plus only what deviated. Don't restate the commands or their standing warnings in every entry.
+
 ## End-of-pass checklist
 
-Run all five **on acceptance**. When the unit is first shown, run only step 1 and add the unit to `Pending validation`. Steps 3 and 4 are the ones most often skipped, and skipping them is what leaves a finished unit reading as still open in the next session.
+Run all six **on acceptance**. When the unit is first shown, run only step 1 and add the unit to `Pending validation`. Steps 3 and 4 are the ones most often skipped, and skipping them is what leaves a finished unit reading as still open in the next session.
 
 1. **Write or complete the entry** in the log, using the format for the unit's kind below, with its status line.
 2. **Update `Pending validation`.** Remove the unit once its status is `validated`. If a check is still open, leave the unit there and say what is blocking.
 3. **Reset `Current unit`** in the shape file, including its Review notes. A captured unit must not still be sitting there.
-4. **Update `Resume next session`** — first action, state on disk, validation commands. This is what the next session reads first.
+4. **Update `Resume next session`**: first action, state on disk, validation commands. This is what the next session reads first.
 5. **Update the live state** that changed: Decisions, Constraints, Assumptions, Risks, Open questions, Candidate Slices.
+6. **Compact if needed.** Compact if `shape.md` is over the size threshold in Local calibration, or if any section only grew this pass. Fold finished detail into the log and strike through what has been superseded.
 
-Then tell the developer, in one line, which manual checks you recorded as passed on their word. If the shape files are tracked in git, remind them to stage them again.
+**Reset means replace.** Rewrite `Current unit` and `Resume next session` from scratch. Never append "On top of that…" to what is there. Appending is how a shape ends up with eight finished units in its Current unit.
+
+**Never record commit state.** `State on disk` holds only what git cannot show. Whether the work is committed is read from git on resume.
+
+On acceptance, also:
+- quote the developer's words in the `Accepted` line
+- tell them in one line which manual checks you recorded as passed on their word, so they can object without another round
+- if the shape files are tracked in git, remind them to stage those files again
 
 Acceptance is what closes a developer-owned check. A later commit found on resume does not close it: see Resume step 3 in `SKILL.md`.
 

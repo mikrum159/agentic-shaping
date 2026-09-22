@@ -91,14 +91,7 @@ Required for every unit kind. The capture is what makes work resumable across se
 
 Read `references/capture-formats.md` when writing one — it carries the per-kind fields and the end-of-pass checklist.
 
-Capture in two moments:
-
-- **When the unit is shown.** Write its log entry while the detail is fresh, with a status line. The status is `manual check open` if the developer still has to validate it. Add the unit to **Pending validation**.
-- **On acceptance.** When the developer asks any version of *"validated, staged — anything to record?"*, **close the unit in that same reply**. Don't ask again, and don't leave it for the next session.
-  - Set the status to `validated`, quoting the developer's words.
-  - Remove the unit from Pending validation and run the rest of the checklist.
-  - Name in one line each manual check you are recording as passed on their word, so they can object without another round.
-  - If the shape files are tracked in git, say they need staging again.
+Capture in two moments. **When the unit is shown**, write its log entry with a status line, and list it under Pending validation if a check is still open. **On acceptance**, close the unit in that same reply: don't ask again, and don't leave it for the next session.
 
 If the unit contained an argued-out divergence (a recommendation the developer overrode after discussion, or confusion about intent), offer the journal once in the closing message and name the moment. Otherwise don't mention it.
 
@@ -160,7 +153,8 @@ Read `references/delegation.md` before writing a brief.
 Defaults tuned to one developer. Edit freely — lessons about how *this* developer works land here rather than rewriting the rules above.
 
 - **Never commit or push.** Show the diff and stop; the developer commits. Only an explicitly autonomous session, agreed in the shape's Working Agreement, changes this.
-- **Acceptance sounds like** "validated, staged. anything to record?" or "staged, all ok. I'll commit - anything to record before I do?". Either one closes the unit in that reply. Anything that asks for a change is a review round.
+- **Acceptance** is any message that says the work is validated or staged and asks about committing or recording. Examples: "validated, staged. anything to record?", "staged, all ok. I'll commit - anything to record before I do?", "validated, staged. can I commit?". Any such message closes the unit in that reply. A message that asks for a change is a review round.
+- **Compact the shape above ~15KB.** The capture checklist enforces this.
 - **Prefer one larger unit with Checkpoints over two small ones.** If a unit's capture would be a single line, it is a Pass, or it belongs merged with its neighbour.
 - **Expect roughly one unit per session.** Keep `Resume next session` accurate enough that a cold session can act from it without reading the whole shape.
 - **Delegate mechanical work to a cheaper model tier**; keep orchestration, captures and Decision Slices in-context.

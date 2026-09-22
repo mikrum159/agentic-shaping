@@ -6,11 +6,11 @@ This file holds **current state only** — what a cold session needs to act. Com
 
 ## Resume next session
 
-Keep this accurate enough that a session resuming here can act without reading the rest of the file.
+Keep this accurate enough that a session resuming here can act without reading the rest of the file. On every capture, **replace** this section rather than appending to it.
 
 **First action:** the one thing to do on resume — usually close out a pending unit, validate something, or agree the next unit.
 
-**State on disk:** uncommitted changes, in-flight branches, anything not yet shipped.
+**State on disk:** only what `git status` / `git log` cannot show. Examples: generated or gitignored files, local-only branches, a pushed but unmerged PR, where this shape lives if it isn't tracked. Never record whether the work is committed; read that from git on resume.
 
 **Canonical validation commands:** exact commands, queries, or URLs to verify the current unit. Reusable across sessions.
 
@@ -41,6 +41,8 @@ Optional. Link or summarize any existing plan, spec, issue, design note, or outl
 Load-bearing choices for current and future units. Strike through rather than delete when superseded; prune at close.
 
 Note the source of each — developer, code, or a document (with path). A decision inherited from documentation is only as current as that document.
+
+If the repo keeps ADRs, a decision recorded there is one line plus the link. Don't restate its rationale here.
 
 - 
 
