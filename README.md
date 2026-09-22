@@ -12,7 +12,13 @@ plan-kickoff  →  shape-dd  →  journal
              promoted back as rules
 ```
 
-> **Status: v1, September 2026.** These grew out of real use, but this release is a substantial restructure — `shape-dd` is roughly half its previous size and the loop has fewer stop-and-ask gates. The wording is therefore newer than the experience behind it. Expect the calibration values to need changing for you; that's what they're for.
+> **Status: v2, September 2026.** v1 was a restructure, written ahead of the experience behind it. v2 is revised after its first real run: 77 units in 10 days on one project (see [First real run](#first-real-run)). That run changed four things:
+> - units now close in the round where you accept them, never by inference later
+> - validating a unit is a line on its own entry, not a separate bookkeeping Pass
+> - the shape no longer records commit state
+> - a size trigger keeps the shape compact
+>
+> This is still one developer's experience. Expect the calibration values to need changing for you; that's what they're for.
 
 ## What it looks like
 
@@ -35,19 +41,40 @@ Candidate Slices:
 Selected unit: Build Slice 1. Stopping here for confirmation before building.
 ```
 
-Then before any code is touched, you get something you can judge without opening a file:
+Then before any code is touched, you get something you can judge without opening a file. This one is real, lightly trimmed, from the first project that used it:
 
 ```text
-Next: the export endpoint. Small — one route, one service call, one
-integration test. Touches the invoice API and the filter service; leaves
-the list endpoint's response contract alone. Commits to a dedicated
-endpoint rather than overloading the list. Still the right next unit.
-                                                          — Build Slice
+Reconciled state: the doc chapter is committed, tree is clean, no unit is in flight.
 
-Anything here you'd shape differently?
+Settled the one thing this slice requires before any install —
+wiring: electron-vite (react-ts template), not Electron Forge's Vite plugin.
+Checked current state, not memory: Forge's plugin left experimental status two days ago.
+
+- Goal: a running Electron + React + TS shell — window opens, empty three-pane
+  layout, typecheck/lint/test gate passes.
+- Scale: one unit — scaffold, add ESLint + Prettier + vitest, one real test.
+- Boundary: new app files and AGENTS.md only. Excludes electron-builder,
+  better-sqlite3, any filesystem access.
+- Architecture: commits to electron-vite and to architecture.md §5's layout as-is.
+- Still right? Yes — first unit past documentation; no Decision has gone stale.
+- Kind: Build Slice.
+
+Agree to this scope, or redirect before I start?
 ```
 
-That second message is the whole bet. It costs one round trip; an over-stuffed slice that has to be rolled back costs far more.
+That message is the whole bet. It costs one round trip; an over-stuffed slice that has to be rolled back costs far more.
+
+The unit ends the same way. You review it, stage it, and say so. The agent closes the unit in that reply, so the next session never has to guess whether it was checked:
+
+```text
+> validated, staged. anything to record?
+
+Closed Slice 2 — you can commit.
+- Log: Accepted — "validated, staged. anything to record?" → validated.
+  Recorded your diff review as the check that passed.
+- Shape: Pending validation and Current unit are empty; Resume points at Slice 3.
+- Shape files are gitignored, so nothing to re-stage.
+```
 
 ## Who this is for
 
@@ -71,13 +98,23 @@ A lightweight anti-drift workflow sitting between vibe coding and spec-driven de
 
 The vocabulary is the point: work comes as a **Build Slice**, a **Decision Slice** (resolving an open question, no code required), a **Re-cut** (revising the slice list itself), or a **Pass** (smaller than a slice). Naming all four stops the agent forcing every step into a "write code" frame, and stops the plan changing silently.
 
-A fifth term does quieter work. A **Checkpoint** is a pause *inside* a unit — no agreement ritual, no capture, silence means proceed. It exists because correction opportunity and unit size are different knobs, and fusing them is what makes slices shrink until every one carries a full ceremony and the whole loop reads as overhead.
+Correction happens inside a unit, not by cutting a new one. Feedback on a shown unit is a **review round**: the agent fixes it, shows it again, and notes it on the unit's entry, without a new agreement. Your **acceptance**, usually sent right after staging, closes the unit in the same reply. For genuinely long units there is also the **Checkpoint**, a pause partway through where silence means proceed. All three exist for the same reason. The chance to correct is a separate knob from unit size. When the two are fused, slices shrink until every one carries a full ceremony.
 
 "Anti-drift" doesn't mean stick to the plan. It means changing course is a deliberate, named, captured move.
 
-The shape splits state from history — `shape.md` stays small and readable, `log.md` accumulates. Since shape files usually aren't committed, a closed shape can be archived to `~/.claude/shape-archive/` before the branch disappears, taking the log and the accumulated process feedback with it.
+The shape splits state from history — `shape.md` stays small and readable, `log.md` accumulates. Whether or not shape files are committed, a closed shape can be archived to `~/.claude/shape-archive/`. That keeps the log and the accumulated process feedback together across repos.
 
 Has its own [README](skills/shape-dd/README.md) with fuller detail.
+
+#### First real run
+
+[MarkScope](https://github.com/mikrum159/markscope) is an Electron app, built from about 20 planning documents that had been written for a different stack. It took 77 units in 10 days: 23 Build Slices, 5 Decision Slices, 2 Re-cuts and 43 Passes. Its shapes and logs are public in [`docs/plans`](https://github.com/mikrum159/markscope/tree/main/docs/plans).
+
+The run found what v2 fixes:
+- a manual check was closed because a commit appeared, and the defect it would have caught shipped
+- nearly half the Passes were bookkeeping
+- the shape's "state on disk" went stale on every commit
+- corrections happened in review rounds that the skill had no name for
 
 ### `journal` — session reflection
 
