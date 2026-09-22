@@ -25,6 +25,8 @@ So "anti-drift" does not mean stick to the plan. It means changing course is a d
 - **Re-cut** — revises the Candidate Slice list (split, merge, reorder, insert, drop). Sits between units, never inside one. Gets its own capture.
 - **Pass** — smaller than a Slice: polish, cleanup, narrow correction, planning. No row in the slice list; still gets its own capture.
 - **Checkpoint** — a pause *inside* a unit. Three or four lines, no agreement ritual, no capture, no new unit. **Silence is proceed.**
+- **Review round** — the developer's feedback on a unit that has been shown but not yet accepted. It belongs to that unit: fix it, show it again, and note it in the unit's log entry. It needs no new agreement and does not become a new Pass.
+- **Acceptance** — the developer's message closing the review. It is typically sent after staging, before committing ("validated, staged — anything to record?"). It confirms the validation the developer owns and closes the unit in the same reply.
 - **Shape Pass** — one iteration of the loop. Ends with a capture.
 
 Naming all four unit kinds is what stops every step being forced into a "write code" frame, and stops the slice list changing silently.
@@ -81,15 +83,24 @@ Check, before showing:
 
 Then surface the diff and validation results, and **stop**. Never commit or push (see *Local calibration*). Do not chain consecutive units in one pass — even tightly-related follow-on work is its own pass with its own agreement. Steps inside one unit's agreed boundary are Checkpoints and need no re-agreement.
 
+Until the developer accepts, any feedback on the unit is a **review round** inside it, not a new unit. Fix it, show it again, and stop again.
+
 ### 4. Capture
 
 Required for every unit kind. The capture is what makes work resumable across sessions; the interview steps are optional, this is not.
 
 Read `references/capture-formats.md` when writing one — it carries the per-kind fields and the end-of-pass checklist.
 
-Capture when the unit ends, and also whenever the developer asks any version of *"anything to update before I commit?"* — that question means close the pass, not just append notes.
+Capture in two moments:
 
-A unit is not captured until validation has landed. Built-but-unvalidated work goes under **Pending validation**, never under Completed units.
+- **When the unit is shown.** Write its log entry while the detail is fresh, with a status line. The status is `manual check open` if the developer still has to validate it. Add the unit to **Pending validation**.
+- **On acceptance.** When the developer asks any version of *"validated, staged — anything to record?"*, **close the unit in that same reply**. Don't ask again, and don't leave it for the next session.
+  - Set the status to `validated`, quoting the developer's words.
+  - Remove the unit from Pending validation and run the rest of the checklist.
+  - Name in one line each manual check you are recording as passed on their word, so they can object without another round.
+  - If the shape files are tracked in git, say they need staging again.
+
+If the unit contained an argued-out divergence (a recommendation the developer overrode after discussion, or confusion about intent), offer the journal once in the closing message and name the moment. Otherwise don't mention it.
 
 ## Sizing
 
@@ -116,7 +127,7 @@ Record where each constraint and decision came from. Anything inherited from a d
 
 1. Read the Current Shape first, then the log's most recent entries.
 2. Honor the shape's Working Agreement.
-3. Reconcile state before proposing anything: if the tree is clean and the work is committed but a unit is still open, or an entry sits under Pending validation whose validation has already passed, close it out as the first action rather than asking the developer to adjudicate.
+3. Reconcile state before proposing anything. Read commit status from `git status` / `git log`; never take it from the shape. You may close validation you own yourself, such as tests or a gate you can re-run. **Never close a developer-owned check by inference.** A commit is not proof that a manual check ran. For each such check still open, ask one line ("Slice 17's restart check — did it pass?") and keep it in Pending validation until the developer answers. If they skip the question, mark it `unconfirmed`. Don't record it as closed.
 4. Summarize the current state briefly.
 5. Propose the next unit, or continue the selected one.
 6. Preserve captured decisions and constraints unless new evidence changes them. Ignore stale chat context that conflicts with the Current Shape.
@@ -149,6 +160,7 @@ Read `references/delegation.md` before writing a brief.
 Defaults tuned to one developer. Edit freely — lessons about how *this* developer works land here rather than rewriting the rules above.
 
 - **Never commit or push.** Show the diff and stop; the developer commits. Only an explicitly autonomous session, agreed in the shape's Working Agreement, changes this.
+- **Acceptance sounds like** "validated, staged. anything to record?" or "staged, all ok. I'll commit - anything to record before I do?". Either one closes the unit in that reply. Anything that asks for a change is a review round.
 - **Prefer one larger unit with Checkpoints over two small ones.** If a unit's capture would be a single line, it is a Pass, or it belongs merged with its neighbour.
 - **Expect roughly one unit per session.** Keep `Resume next session` accurate enough that a cold session can act from it without reading the whole shape.
 - **Delegate mechanical work to a cheaper model tier**; keep orchestration, captures and Decision Slices in-context.

@@ -96,9 +96,9 @@ Issues or surprises:
 
 # Log
 
-## Completed units
+## Units
 
-- 2026-03-04 — [Build Slice] Backend export endpoint: added `GET /api/invoices/export` reusing `InvoiceFilterService`, plus a CSV serialization helper. Integration test proves status/date/customer filters change export output; existing list tests pass. Decision: dedicated endpoint, not a list-endpoint overload — keeps the list response contract untouched.
+- 2026-03-04 — [Build Slice] Backend export endpoint: added `GET /api/invoices/export` reusing `InvoiceFilterService`, plus a CSV serialization helper. Integration test proves status/date/customer filters change export output; existing list tests pass. Decision: dedicated endpoint, not a list-endpoint overload — keeps the list response contract untouched. Status: validated
 
 ## Skill Feedback
 

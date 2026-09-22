@@ -1,23 +1,40 @@
 # Capture formats per unit kind
 
-Read this at the end of a Shape Pass, and whenever the developer asks any version of *"anything to update before I commit?"* — that question means close the pass, not just append notes.
+Read this when a unit is shown, and again on **acceptance**: when the developer asks any version of *"validated, staged — anything to record?"*. That message means close the unit in the same reply, not just append notes.
+
+## One entry per unit, with a status line
+
+Write the unit's entry in the log's `Units` when it is shown, while the detail is fresh. End it with a status line:
+
+- `Status: validated` — all of its validation has landed
+- `Status: manual check open — <the check>` — built and shown; the developer still owns a check
+- `Status: unconfirmed — <the check>` — the developer skipped the question on resume. The close audit re-checks it.
+
+Later events **append a line to the same entry**. They are never new units:
+
+- `Review round N — <feedback> → <what changed>` — feedback on a shown, unaccepted unit
+- `Accepted <date> — "<developer's words>"` — then change the status to `validated`
+
+`Pending validation` in the shape file indexes the entries whose status isn't `validated`. The log holds the record; Pending validation holds the list of what is still open.
 
 ## End-of-pass checklist
 
-Run all five. Steps 3 and 4 are the ones most often skipped, and skipping them is what leaves a finished unit reading as still open in the next session.
+Run all five **on acceptance**. When the unit is first shown, run only step 1 and add the unit to `Pending validation`. Steps 3 and 4 are the ones most often skipped, and skipping them is what leaves a finished unit reading as still open in the next session.
 
-1. **Write the capture** in the log, using the format for the unit's kind below.
-2. **Move the unit** out of `Pending validation` in the shape file, into the log's `Completed units` — only if validation has actually landed. If it hasn't, leave it in `Pending validation` and say what's blocking.
+1. **Write or complete the entry** in the log, using the format for the unit's kind below, with its status line.
+2. **Update `Pending validation`.** Remove the unit once its status is `validated`. If a check is still open, leave the unit there and say what is blocking.
 3. **Reset `Current unit`** in the shape file, including its Review notes. A captured unit must not still be sitting there.
 4. **Update `Resume next session`** — first action, state on disk, validation commands. This is what the next session reads first.
 5. **Update the live state** that changed: Decisions, Constraints, Assumptions, Risks, Open questions, Candidate Slices.
 
-A unit is not captured until validation has landed. Built-but-unvalidated work stays under `Pending validation`, never under Completed units — otherwise a future session reads "Completed" as verified when some entries are merely built.
+Then tell the developer, in one line, which manual checks you recorded as passed on their word. If the shape files are tracked in git, remind them to stage them again.
+
+Acceptance is what closes a developer-owned check. A later commit found on resume does not close it: see Resume step 3 in `SKILL.md`.
 
 ## Build Slice
 
 - actual change made (files touched, key choices)
-- validation result, or "pending validation" with what's blocking
+- validation result, and the status line
 - new or changed decisions / assumptions / constraints / risks
 - open questions surfaced
 - likely next units

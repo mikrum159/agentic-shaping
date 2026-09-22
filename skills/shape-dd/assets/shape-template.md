@@ -64,7 +64,7 @@ Note the source of each, the same way. A constraint taken from a document is a c
 
 ### Pending validation
 
-Units built but not yet verified. Move to the log's Completed units once validation lands. Empty when nothing is in flight — check here on resume before assuming anything is done.
+An index of the log entries whose status is not yet `validated`: `manual check open` or `unconfirmed`. Name the check. Remove an item on acceptance. Empty when nothing is in flight. Check here on resume, before assuming anything is done, and never close an item because a commit appeared.
 
 - 
 

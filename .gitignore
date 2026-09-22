@@ -13,6 +13,9 @@
 # NEXT.md is hand-written input to a PORTFOLIO.md generated one level up.
 NEXT.md
 
+# Shapes used to develop this skill — local working state, archived to ~/.claude/shape-archive/.
+/shapes/
+
 # OS / editor
 .DS_Store
 Thumbs.db
