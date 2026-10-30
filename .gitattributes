@@ -1,0 +1,5 @@
+# Store text as LF; each machine checks out its native line endings.
+* text=auto
+
+# Shell scripts run on the mini, the Spark and in Linux sandboxes: always LF.
+*.sh text eol=lf
